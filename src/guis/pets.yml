@@ -1,0 +1,9 @@
+pets:
+  token:
+    item:
+      id: 
+      data:
+      name: ""
+      lore:
+      - ''
+      glow: true

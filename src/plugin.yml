@@ -1,0 +1,55 @@
+name: CrusadeMain
+version: 1.0.0
+author: BoyJamal
+main: me.boyjamal.main.Main
+depend: [ProtocolLib,SuperTrailsPro,Vault, TokenEnchant]
+softdepend: [MVdWPlaceholderAPI,WorldGuard,WGRegionEvents,BossBarAPI,TitleAPI,EZBlocks]
+commands:
+  pets:
+    default: true
+    usage: /<command>
+  nv:
+    default: true
+    usage: /<command>
+    aliases: [nightvision]
+  triggeranimation:
+    default: op
+    usage: /<command>
+    aliases: [animation, ta]
+  busy:
+    default: op
+    usage: /<command>
+    aliases: [afk, afktoggle]
+  fixhand:
+    default: op
+    usage: /<command>
+    aliases: [fix]
+  discord:
+    default: true
+    usage: /<command>
+    description: Discord Link
+    aliases: [website, link]
+  settings:
+    default: true
+    usage: /<command>
+    description: Player Settings!
+    aliases: [setting, sounds]
+  wings:
+    default: true
+    usage: /<command>
+    description: Wings Selector!
+  trash:
+    default: true
+    usage: /<command>
+    description: Trash Menu
+    aliases: [disposal]
+  hideflags:
+    default: op
+    usage: /<command>
+    description: Hide Item Flags
+  rankup:
+    default: true
+    usage: /<command>
+    description: Rankup Menu!
+    aliases: [ranks, ezranks, listranks]
+    

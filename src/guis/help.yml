@@ -1,0 +1,16 @@
+gui:
+  name: "&8&nHelp Menu"
+  slots: 54
+  items:
+    1:
+      actions:
+      - ''
+      enabled:
+        item: 160
+        data: 10
+        name: "MineSounds"
+        glow: false
+        hasLore: true
+        lore:
+        - 'Click to disable'
+        - 'the MineSounds'

@@ -1,0 +1,24 @@
+gui:
+  items:
+    1:
+      type: "minesounds"
+      enabled:
+        item: 160
+        data: 10
+        name: "MineSounds"
+        glow: false
+        hasLore: true
+        lore:
+        - 'Click to disable'
+        - 'the MineSounds'
+      disabled:
+        item: 160
+        data: 4
+        name: "MineSounds"
+        glow: false
+        hasLore: true
+        lore:
+        - 'Click to enable'
+        - 'the MineSounds'
+        
+  

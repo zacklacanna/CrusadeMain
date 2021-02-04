@@ -1,0 +1,21 @@
+fortune:
+  multi: 1.25
+  allowed_worlds:
+    - NewMines
+  fortune_blocks:
+    - DIAMOND_ORE
+    - EMERALD_ORE
+    - GOLD_ORE
+    - IRON_ORE
+    - LAPIS_ORE
+    - REDSTONE_ORE
+    - QUARTZ_ORE
+    - COAL_ORE
+    - DIAMOND_BLOCK
+    - EMERALD_BLOCK
+    - GOLD_BLOCK
+    - IRON_BLOCK
+    - LAPIS_BLOCK
+    - REDSTONE_BLOCK
+    - QUARTZ_BLOCK
+    - COAL_BLOCK
