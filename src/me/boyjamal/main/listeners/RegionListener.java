@@ -1,78 +1,113 @@
 package me.boyjamal.main.listeners;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.inventivetalent.bossbar.BossBar;
 import org.inventivetalent.bossbar.BossBarAPI;
 
 import com.mewin.WGRegionEvents.events.RegionEnterEvent;
 import com.mewin.WGRegionEvents.events.RegionLeaveEvent;
 
-import net.md_5.bungee.api.ChatColor;
+import me.boyjamal.main.Main;
+import me.boyjamal.main.utils.MainUtils;
 import net.md_5.bungee.api.chat.TextComponent;
 
 public class RegionListener implements Listener {
 
 	@EventHandler
-	public void onEnter(RegionEnterEvent e)
+	public void onFlyEnable(RegionEnterEvent e)
 	{
-		Player p = e.getPlayer();
-		if (p.getWorld().getName().equalsIgnoreCase("NewMines"))
+		new BukkitRunnable()
 		{
-			String name = e.getRegion().getId();
-			String toAdd = "";
-			boolean remove = false;
-			if (name.contains("-"))
+			public void run()
 			{
-				String[] each = name.split("-");
-				if (each.length == 2)
+				Player p = e.getPlayer();
+				if (p != null)
 				{
-					if (each[1].equalsIgnoreCase("area"))
+					if (p.hasPermission("crusademc.admin"))
 					{
-						if (!(each[0].length() == 1))
-						{
-							toAdd = each[0].toUpperCase();
-							remove = true;
-						} else {
-							toAdd = each[0].toUpperCase() + "-MINE";
-							remove = true;
-						}
-					} else {
 						return;
+					}
+					
+					if (p.getWorld().getName().equalsIgnoreCase("NewMines"))
+					{
+						String regionName = e.getRegion().getId();
+						boolean validRegion = false;
+						try {
+							String[] regionSplit = regionName.split("-");
+							if (regionSplit.length == 2)
+							{
+								if (regionSplit[1].equalsIgnoreCase("area"))
+								{
+									validRegion = true;
+								}
+							}
+						} catch (Exception exc) {}
+						
+						if (validRegion)
+						{
+							if (!(p.isFlying()))
+							{
+								p.sendMessage(MainUtils.chatColor("&d&o&lFly &7&oYour flight has been enabled!"));
+								p.setAllowFlight(true);
+								p.setFlying(true);
+							}
+						}
 					}
 				}
 			}
-			
-			
-			if (remove && BossBarAPI.hasBar(p))
-			{
-				if (!(ChatColor.stripColor(BossBarAPI.getBossBar(p).getMessage()).equalsIgnoreCase(toAdd)))
-				{
-					BossBarAPI.removeAllBars(p);
-				}
-			}
-			
-			if (e.getRegion().getId().equalsIgnoreCase("__global__"))
+		}.runTaskLater(Main.getInstance(), 8L);
+	}
+	
+	@EventHandler
+	public void onFlyDisable(RegionLeaveEvent e)
+	{
+		Player p = e.getPlayer();
+		if (p != null)
+		{
+			if (p.hasPermission("crusademc.admin"))
 			{
 				return;
 			}
 			
-			TextComponent text = new TextComponent(toAdd);
-			text.setBold(true);
-			text.setColor(ChatColor.LIGHT_PURPLE);
-			
-			BossBarAPI.addBar(p, // The receiver of the BossBar
-				      text, // Displayed message
-				      BossBarAPI.Color.PINK, // Color of the bar
-				      BossBarAPI.Style.NOTCHED_20, // Bar style
-				      1.0f, // Progress (0.0 - 1.0)
-				      0, // Timeout
-				      0); // Timeout-interval
-		} else {
-			if (BossBarAPI.hasBar(p))
+			if (p.getWorld().getName().equalsIgnoreCase("NewMines"))
 			{
-				BossBarAPI.removeAllBars(p);
+				String regionName = e.getRegion().getId();
+				boolean validRegion = false;
+				try {
+					String[] regionSplit = regionName.split("-");
+					if (regionSplit.length == 2)
+					{
+						if (regionSplit[1].equalsIgnoreCase("area"))
+						{
+							validRegion = true;
+						}
+					}
+				} catch (Exception exc) {}
+				
+				if (validRegion)
+				{
+					if (p.isFlying() || p.getAllowFlight())
+					{
+						p.sendMessage(MainUtils.chatColor("&d&o&lFly &7&oYour flight has been disabled!"));
+						p.setAllowFlight(false);
+						p.setFlying(false);
+					}
+				}
 			}
+		}
+	}
+	
+	@EventHandler
+	public void onEnter(RegionEnterEvent e)
+	{
+		Player p = e.getPlayer();
+		if (BossBarAPI.hasBar(p))
+		{
+			BossBarAPI.removeAllBars(p);
 		}
 	}
 	

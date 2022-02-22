@@ -40,12 +40,12 @@ public class AnimationTask extends BukkitRunnable {
     	}
     	count++;
     	
-    	Block b = p.getTargetBlock((HashSet<Byte>) null, 3);
+    	Block b = p.getTargetBlock((HashSet<Byte>) null, 2);
 		Location loc = b.getLocation().add(0,-.75,0);
     	
         Location rotatingLoc = loc;
         float yaw = rotatingLoc.getYaw() + Oldyaw;
-        Oldyaw += 6;
+        Oldyaw += 12;
         if (Oldyaw >= 180)
             Oldyaw *= -1;
         rotatingLoc.setYaw(yaw);

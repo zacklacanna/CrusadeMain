@@ -1,0 +1,226 @@
+kits:
+  name: "&8&nKits"
+  slots: 9
+  items:
+    0:
+      permission: "essentials.kits.barbarian"
+      leftClick:
+      - 'player-ekit barbarian'
+      rightClick:
+      - 'player-kitpreview barbarian'
+      messages:
+      - ''
+      hasPerm:
+          id: 270
+          data: 0
+          name: "&f&l&m--{=--|&r &d&lBarbarian &f&l&m|--=}--"
+          lore:
+          - '&f'
+          - '&a&lUNLOCKED'
+          - '&7&oLeft-Click to redeem &d&oBarbarian&7&o kit'
+          - '&7&oRight-Click to preview kit.'
+          glow: false
+      noPerm:
+          id: 166
+          data: 0
+          name: "&f&l&m--{=--|&r &c&lBarbarian &7&o(LOCKED) &f&l&m|--=}--"
+          lore:
+          - '&r'
+          - '&c&lLOCKED'
+          - '&7&oRight-Click to preview kit.'
+          glow: false
+    1:
+      permission: "essentials.kits.cerberus"
+      leftClick:
+      - 'player-ekit cerberus'
+      rightClick:
+      - 'player-kitpreview cerberus'
+      messages:
+      - ''
+      hasPerm:
+          id: 274
+          data: 0
+          name: "&f&l&m--{=--|&r &d&lCerberus &f&l&m|--=}--"
+          lore:
+          - '&r'
+          - '&a&lUNLOCKED'
+          - '&7&oLeft-Click to redeem &d&oCerberus&7&o kit'
+          - '&7&oRight-Click to preview kit.'
+          glow: false
+      noPerm:
+          id: 166
+          data: 0
+          name: "&f&l&m--{=--|&r &c&lCerberus &7&o(LOCKED) &f&l&m|--=}--"
+          lore:
+          - '&r'
+          - '&c&lLOCKED'
+          - '&7&oRight-Click to preview kit.'
+          glow: true
+    2:
+      permission: "essentials.kits.leviathan"
+      leftClick:
+      - 'player-ekit leviathan'
+      rightClick:
+      - 'player-kitpreview leviathan'
+      messages:
+      - ''
+      hasPerm:
+          id: 257
+          data: 0
+          name: "&f&l&m--{=--|&r &d&lLeviathan &f&l&m|--=}--"
+          lore:
+          - '&r'
+          - '&a&lUNLOCKED'
+          - '&7&oLeft-Click to redeem &d&oLeviathan&7&o kit'
+          - '&7&oRight-Click to preview kit.'
+          glow: false
+      noPerm:
+          id: 166
+          data: 0
+          name: "&f&l&m--{=--|&r &c&lLeviathan &7&o(LOCKED) &f&l&m|--=}--"
+          lore:
+          - '&r'
+          - '&c&lLOCKED'
+          - '&7&oRight-Click to preview kit.'
+          glow: true
+    3:
+      permission: "essentials.kits.cyclops"
+      leftClick:
+      - 'player-ekit cyclops'
+      rightClick:
+      - 'player-kitpreview cyclops'
+      messages:
+      - ''
+      hasPerm:
+          id: 285
+          data: 0
+          name: "&f&l&m--{=--|&r &d&lCyclops &f&l&m|--=}--"
+          lore:
+          - '&r'
+          - '&a&lUNLOCKED'
+          - '&7&oLeft-Click to redeem &d&oCyclops&7&o kit'
+          - '&7&oRight-Click to preview kit.'
+          glow: false
+      noPerm:
+          id: 166
+          data: 0
+          name: "&f&l&m--{=--|&r &c&lCyclops &7&o(LOCKED) &f&l&m|--=}--"
+          lore:
+          - '&r'
+          - '&c&lLOCKED'
+          - '&7&oRight-Click to preview kit.'
+          glow: true
+    4:
+      permission: "essentials.kits.pegasus"
+      leftClick:
+      - 'player-ekit pegasus'
+      rightClick:
+      - 'player-kitpreview pegasus'
+      messages:
+      - ''
+      hasPerm:
+          id: 278
+          data: 0
+          name: "&f&l&m--{=--|&r &d&lPegasus &f&l&m|--=}--"
+          lore:
+          - '&r'
+          - '&a&lUNLOCKED'
+          - '&7&oLeft-Click to redeem &d&oPegasus&7&o kit'
+          - '&7&oRight-Click to preview kit.'
+          glow: false
+      noPerm:
+          id: 166
+          data: 0
+          name: "&f&l&m--{=--|&r &c&lPegasus &7&o(LOCKED) &f&l&m|--=}--"
+          lore:
+          - '&r'
+          - '&c&lLOCKED'
+          - '&7&oRight-Click to preview kit.'
+          glow: true
+    5:
+      permission: "essentials.kits.hercules"
+      leftClick:
+      - 'player-ekit hercules'
+      rightClick:
+      - 'player-kitpreview hercules'
+      messages:
+      - ''
+      hasPerm:
+          id: 388
+          data: 0
+          name: "&f&l&m--{=--|&r &d&lHercules &f&l&m|--=}--"
+          lore:
+          - '&r'
+          - '&a&lUNLOCKED'
+          - '&7&oLeft-Click to redeem &d&oHercules&7&o kit'
+          - '&7&oRight-Click to preview kit.'
+          glow: true
+      noPerm:
+          id: 166
+          data: 0
+          name: "&f&l&m--{=--|&r &c&lHercules &7&o(LOCKED) &f&l&m|--=}--"
+          lore:
+          - '&r'
+          - '&c&lLOCKED'
+          - '&7&oRight-Click to preview kit.'
+          glow: false
+    6:
+      permission: ""
+      commands:
+      - ''
+      messages:
+      - ''
+      hasPerm:
+          id: 160
+          data: 15
+          name: "&f"
+          lore:
+          - '&r'
+          glow: false
+      noPerm:
+          id: 166
+          data: 0
+          name: "&f"
+          lore:
+          - '&r'
+          glow: true
+    7:
+      permission: ""
+      commands:
+      - ''
+      messages:
+      - ''
+      hasPerm:
+          id: 160
+          data: 15
+          name: "&f"
+          lore:
+          - '&r'
+          glow: false
+      noPerm:
+          id: 166
+          data: 0
+          name: "&f"
+          lore:
+          - '&r'
+          glow: true
+    8:
+      permission: ""
+      commands:
+      - ''
+      messages:
+      - ''
+      hasPerm:
+          id: 160
+          data: 15
+          name: "&f"
+          lore:
+          - '&r'
+          glow: false
+      noPerm:
+          id: 166
+          data: 0
+          name: "&f"
+          lore:
+          - '&r'
+          glow: true

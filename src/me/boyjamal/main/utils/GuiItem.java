@@ -7,6 +7,7 @@ public class GuiItem {
 	private ItemCreator item;
 	private int slot;
 	private List<String> actions;
+	private List<String> secondActions;
 	private List<String> messages;
 	private String type;
 	
@@ -25,6 +26,20 @@ public class GuiItem {
 		this.actions = actions;
 		this.messages = messages;
 		this.type = type;
+	}
+	
+	public GuiItem(ItemCreator item, int slot, List<String> actions, List<String> messages, List<String> secondActions)
+	{
+		this.item = item;
+		this.slot = slot;
+		this.actions = actions;
+		this.messages = messages;
+		this.secondActions = secondActions;
+	}
+	
+	public List<String> getSecondAction()
+	{
+		return secondActions;
 	}
 	
 	public ItemCreator getItemCreator()

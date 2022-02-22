@@ -18,7 +18,7 @@ public class Trash implements CommandExecutor {
 			return true;
 		} else {
 			Player p = (Player)sender;
-			Inventory inv = Bukkit.createInventory(null, 45,MainUtils.chatColor("&r          &7&nTrash"));
+			Inventory inv = Bukkit.createInventory(null, 45,MainUtils.chatColor("&r                &8&nTrash"));
 			p.openInventory(inv);
 		}
 		return true;

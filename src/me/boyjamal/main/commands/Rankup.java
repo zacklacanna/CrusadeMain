@@ -1,5 +1,8 @@
 package me.boyjamal.main.commands;
 
+import me.boyjamal.main.Main;
+import me.boyjamal.main.utils.*;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
@@ -7,17 +10,10 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-
-import me.boyjamal.main.Main;
-import me.boyjamal.main.utils.GuiItem;
-import me.boyjamal.main.utils.GuiManager;
-import me.boyjamal.main.utils.ItemCreator;
-import me.boyjamal.main.utils.MainUtils;
-import me.boyjamal.main.utils.StorageManager;
 
 public class Rankup implements CommandExecutor {
 	
+	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
 	{
 		if (!(sender instanceof Player))
@@ -36,7 +32,7 @@ public class Rankup implements CommandExecutor {
 		return true;
 	}
 	
-	public Inventory getInv(Player p)
+	public static Inventory getInv(Player p)
 	{
 		if (StorageManager.getRankups() != null)
 		{
@@ -44,9 +40,9 @@ public class Rankup implements CommandExecutor {
 			Inventory inv;
 			if (mang.getType() != null)
 			{
-				inv = Bukkit.createInventory(null, mang.getType(), MainUtils.chatColor(mang.getName()));
+				inv = Bukkit.createInventory(null, mang.getType(), mang.getName());
 			} else {
-				inv = Bukkit.createInventory(null, mang.getSlots(),MainUtils.chatColor(mang.getName()));
+				inv = Bukkit.createInventory(null, mang.getSlots(),mang.getName());
 			}
 			
 			long sum = 0;
@@ -57,12 +53,13 @@ public class Rankup implements CommandExecutor {
 				{
 					inv.setItem(items.getSlot()-1, item.getAccessItem());
 				} else {
+					if (item.getCost() != 0)
+					{
+						sum += item.getCost();
+					}
+					
 					if (Main.getInstance().getEco().getBalance(p) >= sum)
 					{
-						if (item.getCost() != 0)
-						{
-							sum += item.getCost();
-						}
 						inv.setItem(items.getSlot()-1, item.getCooldownItem());
 						continue;
 					} else {

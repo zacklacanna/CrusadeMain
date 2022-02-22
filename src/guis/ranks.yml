@@ -1,139 +1,96 @@
 gui:
   slots: 45
-  name: "&7&nRankup"
+  name: "&8&nRankup"
   items:
     1:
       actions:
-      - ''
+      - 'player:ewarp a'
       noPerm:
-      - ''
+      - 'message:&c&lError: &7You do not have enough money to do this!'
       rankedUp:
-      - ''
-      cost: 1000
-      permission: "ezranks.A"
+      - 'player:rankup'
+      cost: 0
+      permission: essentials.warps.A
       access:
-        name: "&r        &d&n&lA MINE&r         &r"
-        item: 1
-        data: 0
-        hasLore: true
-        glow: true
-        lore:
-        - ''
-        - '&7&o   Click to teleport to   &r'
-        - '&7&o         this warp         &r'
-        - ''
-        - '&r        &a&n&lUNLOCKED&r        &r'
-      locked:
-        name: "&c&lA-MINE"
+        name: '&r            &d&n&lA-MINE&r         &r'
         item: 1
         data: 0
         hasLore: true
         glow: false
         lore:
         - ''
-        - '&7&o     You can not access'
-        - '&7&o       this warp yet!'
+        - '&7&o      Click to teleport to   &r'
+        - '&7&o          the &d&lA-MINE         &r'
         - ''
-        - '&r        &c&nCost: $1000'
-      canRankup:
-        name: "&a&lA-MINE"
-        item: 1
+        - '&r          &a&n&lUNLOCKED&r        &r'
+      locked:
+        name: '&r            &d&n&lA-MINE&r         &r'
+        item: 166
         data: 0
         hasLore: true
-        glow: true 
+        glow: false
         lore:
         - ''
-        - '&7&o      Click to rankup'
-        - '&7&o       to this Mine!'
+        - '&7&o         You cannot access   &r'
+        - '&7&o           this warp yet!         &r'
         - ''
-        - '&r       e&a&nCost: $1000'
+        - '&r           &a&n&lLOCKED&r        &r'
+        - '&r         &7&nCost:&f $0'
+      canRankup:
+        name: '&r             &d&n&lA-MINE&r         &r'
+        item: 95
+        data: 9
+        hasLore: true
+        glow: true
+        lore:
+        - ''
+        - '&7&o    Click to Rank up to the   &r'
+        - '&7&o              &d&lA-MINE         &r'
+        - ''
+        - '&r          &7&nCost:&f $100000'
     2:
       actions:
-      - ''
+      - 'player:ewarp b'
       noPerm:
-      - ''
+      - 'message:&c&lError: &7You do not have enough money to do this!'
       rankedUp:
-      - ''
-      cost: 5000
-      permission: "ezranks.B"
+      - 'player:rankup'
+      cost: 180000
+      permission: essentials.warps.B
       access:
-        name: "&d&lB-MINE"
-        item: 16
-        data: 0
-        hasLore: true
-        glow: true
-        lore:
-        - ''
-        - '&7&o     Click to teleport to'
-        - '&7&o          the &d&o&nB-MINE'
-        - ''
-        - '&r          &a&nUNLOCKED'
-      locked:
-        name: "&c&lB-MINE"
-        item: 16
+        name: '&r            &d&n&lB-MINE&r         &r'
+        item: 1
         data: 0
         hasLore: true
         glow: false
         lore:
         - ''
-        - '&7&o     You can not access'
-        - '&7&o       this warp yet!'
+        - '&7&o      Click to teleport to   &r'
+        - '&7&o          the &d&lB-MINE         &r'
         - ''
-        - '&r        &c&nCost: $5000'
-      canRankup:
-        name: "&a&lA-MINE"
-        item: 16
-        data: 0
-        hasLore: true
-        glow: true 
-        lore:
-        - ''
-        - '&7&o      Click to rankup'
-        - '&7&o       to this Mine!'
-        - ''
-        - '&r       e&a&nCost: $5000'
-    3:
-      actions:
-      - ''
-      noPerm:
-      - ''
-      rankedUp:
-      - ''
-      cost: 10000
-      permission: "ezranks.C"
-      access:
-        name: "&d&lC-MINE"
-        item: 16
-        data: 0
-        hasLore:
-        glow: true
-        lore:
-        - ''
-        - '&7&o     Click to teleport to'
-        - '&7&o           this warp'
-        - ''
-        - '&r          &a&nUNLOCKED'
+        - '&r          &a&n&lUNLOCKED&r        &r'
       locked:
-        name: "&c&lC-MINE"
-        item: 16
+        name: '&r            &d&n&lB-MINE&r         &r'
+        item: 166
         data: 0
         hasLore: true
         glow: false
         lore:
         - ''
-        - '&7&o     You can not access'
-        - '&7&o       this warp yet!'
+        - '&7&o         You cannot access   &r'
+        - '&7&o           this warp yet!         &r'
         - ''
-        - '&r        &c&nCost: $10000'
+        - '&r           &c&n&lLOCKED&r        &r'
+        - '&r          &7&nCost:&f $180,000'
       canRankup:
-        name: "&a&lC-MINE"
-        item: 16
-        data: 0
+        name: '&r             &d&n&lB-MINE&r         &r'
+        item: 95
+        data: 9
         hasLore: true
-        glow: true 
+        glow: true
         lore:
         - ''
-        - '&7&o      Click to rankup'
-        - '&7&o       to this Mine!'
+        - '&7&o           Click to Rank up to   &r'
+        - '&7&o              &d&lB-MINE         &r'
         - ''
-        - '&r       e&a&nCost: $10000'
+        - '&r           &7&nCost:&f $100000'

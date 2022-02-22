@@ -1,24 +1,113 @@
 gui:
   items:
-    1:
+    0:
       type: "minesounds"
       enabled:
-        item: 160
-        data: 10
-        name: "MineSounds"
-        glow: false
+        item: 84
+        data: 0
+        name: "&d&lMine Sounds"
+        glow: true
         hasLore: true
         lore:
-        - 'Click to disable'
-        - 'the MineSounds'
+        - '&7&oClick to disable'
+        - '&7&othe Mine Sounds'
+        - ''
+        - '&fStatus: &a&nOn'
       disabled:
-        item: 160
-        data: 4
-        name: "MineSounds"
+        item: 84
+        data: 0
+        name: "&d&lMine Sounds"
         glow: false
         hasLore: true
         lore:
-        - 'Click to enable'
-        - 'the MineSounds'
-        
-  
+        - '&7&oClick to enable'
+        - '&7&othe Mine Sounds'
+        - ''
+        - '&fStatus: &c&nOff'
+    1:
+      type: "tokensummery"
+      enabled:
+        item: 378
+        data: 0
+        name: "&e&lToken Summery"
+        glow: true
+        hasLore: true
+        lore:
+        - '&7&oClick to disable'
+        - '&7&othe Token Summery'
+        - '&7&owhile you are mining!'
+        - ''
+        - '&fStatus: &a&nOn'
+      disabled:
+        item: 378
+        data: 0
+        name: "&e&lToken Summery"
+        glow: false
+        hasLore: true
+        lore:
+        - '&7&oClick to enable'
+        - '&7&othe Token Summery'
+        - '&7&owhile you are mining!'
+        - ''
+        - '&fStatus: &c&nOff'
+    3:
+      type: "jumpboost"
+      enabled:
+        item: 288
+        data: 0
+        name: "&f&lJump Boost"
+        glow: true
+        hasLore: true
+        lore:
+        - '&7&oClick to disable'
+        - '&7&oJump Boost'
+        - '&7Unlocked from &f&nArtemis Essence'
+        - ''
+        - '&fStatus: &a&nOn'
+      disabled:
+        item: 288
+        data: 0
+        name: "&f&lJump Boost"
+        glow: false
+        hasLore: true
+        lore:
+        - '&7&oClick to enable'
+        - '&7&oJump Boost'
+        - '&7Unlocked from &f&nArtemis Essence'
+        - ''
+        - '&fStatus: &c&nOff'
+      noPerm:
+        item: 288
+        data: 0
+        name: "&f&lJump Boost"
+        glow: false
+        hasLore: true
+        lore:
+        - ''
+        - '&c&lLocked'
+        - ''
+        - '&7Unlock by redeeming &f&nArtemis Essence'
+    4:
+      type: "nightvision"
+      perm: "crusademc.jumpboost"
+      enabled:
+        item: 373
+        data: 8262
+        name: "&d&lNight Vision"
+        glow: true
+        hasLore: true
+        lore:
+        - '&7&oClick to disable'
+        - '&7&oNight Vision'
+        - '&fStatus: &a&nOn'
+      disabled:
+        item: 373
+        data: 8262
+        name: "&d&lNight Vision"
+        glow: false
+        hasLore: true
+        lore:
+        - '&7&oClick to enable'
+        - '&7&oNight Vision'
+        - ''
+        - '&fStatus: &c&nOff'

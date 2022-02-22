@@ -1,0 +1,26 @@
+warps:
+  name: "&8&nWarps"
+  slots: 54
+  items:
+    0:
+      permission: "essentials.warps.Z"
+      commands:
+      - 'console:warp Z %name%'
+      messages:
+      - ''
+      hasPerm:
+          id: 57
+          data: 0
+          name: "&b&lZ-Mine"
+          lore:
+          - '&r'
+          - '&7&nClick to teleport to Z-Mine'
+          glow: false
+      noPerm:
+          id: 166
+          data: 0
+          name: "&c&lZ-Mine &7&o(locked)"
+          lore:
+          - '&r'
+          - '&c&nLocked'
+          glow: false

@@ -27,53 +27,60 @@ public class Settings implements CommandExecutor {
 		return true;
 	}
 	
-	public Inventory openInv(Player p)
-	{
-		String name = p.getName();
-		if (name.endsWith("s"))
+	public static Inventory openInv(Player p)
+	{		
+		Inventory inv = Bukkit.createInventory(null, InventoryType.HOPPER,MainUtils.chatColor("&8&nPersonal Settings"));
+		
+		if (!(PlayerSettings.activeSettings.containsKey(p.getUniqueId().toString())))
 		{
-			name = p.getName() + "' Settings";
-		} else {
-			name = p.getName() + "'s Settings";
+			PlayerSettings.activeSettings.put(p.getUniqueId().toString(), new PlayerSettings(p.getUniqueId().toString(),p.getName()));
 		}
 		
-		double spacesAmount = ((30-name.length())/2)-1;
-		if (!(spacesAmount % 1 == 0))
-		{
-			spacesAmount++;
-		}
+		PlayerSettings settings = PlayerSettings.activeSettings.get(p.getUniqueId().toString());
 		
-		String spaces = "";
-		for (int i = 1; i<=spacesAmount;i++)
-		{
-			spaces += " ";
-		}
-		
-		Inventory inv = Bukkit.createInventory(null, InventoryType.DISPENSER,MainUtils.chatColor("&r" + spaces + "&8" + name));
 		if (StorageManager.getSettings() != null)
 		{
 			for (GuiItem items : StorageManager.getSettings().getItems())
 			{
-				if (PlayerSettings.activeSettings.containsKey(p.getUniqueId().toString()))
+				if (items.getItemCreator().getPermission() != null)
 				{
-					PlayerSettings settings = PlayerSettings.activeSettings.get(p.getUniqueId().toString());
-					if (items.getItemCreator().getAccessItem() != null && items.getType() != null)
+					if (p.hasPermission(items.getItemCreator().getPermission()))
 					{
 						if (settings.hasEnabled(items.getType()))
 						{
-							inv.setItem(items.getSlot(), items.getItemCreator().getNoPermItem());
-						} else {
 							inv.setItem(items.getSlot(), items.getItemCreator().getAccessItem());
+						} else {
+							inv.setItem(items.getSlot(), items.getItemCreator().getCooldownItem());
+						}
+					} else {
+						if (items.getItemCreator().getNoPermItem() != null)
+						{
+							inv.setItem(items.getSlot(), items.getItemCreator().getNoPermItem());
 						}
 					}
 				} else {
-					if (items.getItemCreator().getAccessItem() != null)
+					if (settings.hasEnabled(items.getType()))
 					{
 						inv.setItem(items.getSlot(), items.getItemCreator().getAccessItem());
+					} else {
+						inv.setItem(items.getSlot(), items.getItemCreator().getNoPermItem());
 					}
 				}
 			}
 		}
+		return inv;
+	}
+	
+	public static Inventory essenceInv(Player p)
+	{
+		Inventory inv = Bukkit.createInventory(null, InventoryType.HOPPER, MainUtils.chatColor("&8&nEssence Settings"));
+		if (!(PlayerSettings.activeSettings.containsKey(p.getUniqueId().toString())))
+		{
+			PlayerSettings.activeSettings.put(p.getUniqueId().toString(), new PlayerSettings(p.getUniqueId().toString(),p.getName()));
+		}
+		PlayerSettings settings = PlayerSettings.activeSettings.get(p.getUniqueId().toString());
+		
+		
 		return inv;
 	}
 

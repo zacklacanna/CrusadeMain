@@ -2,7 +2,7 @@ name: CrusadeMain
 version: 1.0.0
 author: BoyJamal
 main: me.boyjamal.main.Main
-depend: [ProtocolLib,SuperTrailsPro,Vault, TokenEnchant]
+depend: [ProtocolLib,SuperTrailsPro,Vault, TokenEnchant,EZRanksPro,LuckPerms]
 softdepend: [MVdWPlaceholderAPI,WorldGuard,WGRegionEvents,BossBarAPI,TitleAPI,EZBlocks]
 commands:
   pets:
@@ -12,10 +12,32 @@ commands:
     default: true
     usage: /<command>
     aliases: [nightvision]
+  withdrawtokens:
+    default: true
+    usage: /<command>
+    aliases: [wt,withdrawtoken]
+  withdrawbalance:
+    default: true
+    usage: /<command>
+    aliases: [wb,withdrawbalance]
+  blockstop:
+    default: true
+    usage: /<command>
+    aliases: [bt,blocktop]
+  mineparty:
+    usage: /<command>
+    default: op
+  maxrankup:
+    usage: /<command>
+    default: true
   triggeranimation:
     default: op
     usage: /<command>
     aliases: [animation, ta]
+  redeemxp:
+    default: true
+    usage: /<command>
+    aliases: [rxp, xp, xpredeem]
   busy:
     default: op
     usage: /<command>
@@ -24,6 +46,30 @@ commands:
     default: op
     usage: /<command>
     aliases: [fix]
+  kits:
+    default: true
+    usage: /<command>
+    aliases: [kit,ekit]
+  enchant:
+    default: true
+    usage: /<command>
+    aliases: [enchants]
+  tokenshop:
+    default: true
+    usage: /<command>
+    aliases: [ts]
+  giveall:
+    default: op
+    usage: /<command>
+    aliases: [gall,giveaway]
+  warps:
+    default: true
+    usage: /<command>
+    aliases: [warp,ewarp]
+  prestige:
+    default: true
+    usage: /<command>
+    aliases: [prestiges]
   discord:
     default: true
     usage: /<command>

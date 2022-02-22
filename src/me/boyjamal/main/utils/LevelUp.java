@@ -2,6 +2,7 @@ package me.boyjamal.main.utils;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.UUID;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -19,11 +20,11 @@ import me.boyjamal.main.Main;
 public class LevelUp {
 
 	public static HashMap<String,Integer> activeAnimations = new HashMap<>();
-	public static HashMap<String,ArmorStand> activeArmorStands = new HashMap<>();
+	public static HashMap<String,UUID> activeArmorStands = new HashMap<>();
 	
-	public static void createAnimation(Player p, String rank)
+	public static void createAnimation(Player p, String rank, String type)
 	{
-		Block b = p.getTargetBlock((HashSet<Byte>) null, 3);
+		Block b = p.getTargetBlock((HashSet<Byte>) null, 2);
 		Location loc = b.getLocation().add(0,-.75,0);
 		
 		final ArmorStand as = p.getWorld().spawn(loc, ArmorStand.class);
@@ -33,12 +34,12 @@ public class LevelUp {
 	     as.setCustomNameVisible(true);
 	     as.setArms(true);
 	     as.setItemInHand(itemStack(p,rank));
-	     as.setRightArmPose(new EulerAngle(Math.toRadians(90), Math.toRadians(90), Math.toRadians(0)));
+	     as.setRightArmPose(new EulerAngle(Math.toRadians(-90), Math.toRadians(90), Math.toRadians(0)));
 	     as.setCustomName(MainUtils.chatColor(itemStack(p, rank).getItemMeta().getDisplayName()));
 	     
 	     BukkitTask task = new AnimationTask(p,as).runTaskTimer(Main.getInstance(), 0,1);
 	     activeAnimations.put(p.getUniqueId().toString(), task.getTaskId());
-	     activeArmorStands.put(p.getUniqueId().toString(), as);
+	     activeArmorStands.put(p.getUniqueId().toString(), as.getUniqueId());
 	}
 	
 	public static ItemStack itemStack(Player p, String rank)

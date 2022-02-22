@@ -28,6 +28,17 @@ public class RecipeBlocker implements Listener {
             }
             return;
 		}
+		
+		if (mat == Material.EYE_OF_ENDER)
+		{
+			e.getInventory().setResult(new ItemStack(Material.AIR));
+            for(HumanEntity he : e.getViewers()) {
+                if(he instanceof Player) {
+                    ((Player)he).sendMessage(MainUtils.chatColor("&c&lERROR &7&oYou can not craft this item!"));
+                }
+            }
+            return;
+		}
 	}
 
 }

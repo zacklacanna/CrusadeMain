@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -25,6 +26,26 @@ public class StorageManager {
 	private static FileConfiguration ranksYML;
 	private static GuiManager rankups = null;
 	
+	private static File warpsFile = new File(Main.getInstance().getDataFolder() + File.separator + "guis" + File.separator + "warps.yml");
+	private static FileConfiguration warpsYML;
+	private static GuiManager warps = null;
+	
+	private static File prestigeWarpsFile = new File(Main.getInstance().getDataFolder() + File.separator + "guis" + File.separator + "prestigeWarps.yml");
+	private static FileConfiguration prestigeWarpsYML;
+	private static GuiManager prestigeWarps = null;
+	
+	private static File publicWarpsFile = new File(Main.getInstance().getDataFolder() + File.separator + "guis" + File.separator + "publicWarps.yml");
+	private static FileConfiguration publicWarpsYML;
+	private static GuiManager publicWarps = null;
+	
+	private static File donorWarpsFile = new File(Main.getInstance().getDataFolder() + File.separator + "guis" + File.separator + "donorWarps.yml");
+	private static FileConfiguration donorWarpsYML;
+	private static GuiManager donorWarps = null;
+	
+	private static File kitsFile = new File(Main.getInstance().getDataFolder() + File.separator + "guis" + File.separator + "kits.yml");
+	private static FileConfiguration kitsYML;
+	private static GuiManager kits = null;
+	
 	private static File settingsFile = new File(Main.getInstance().getDataFolder() + File.separator + "guis" + File.separator + "settings.yml");
 	private static FileConfiguration settingsYML;
 	private static GuiManager settings = null;
@@ -33,12 +54,11 @@ public class StorageManager {
 	private static FileConfiguration petsYML;
 	private static List<PetUtil> activePets = new ArrayList<>();
 	
-	private static File settingsData = new File(Main.getInstance().getDataFolder() + File.separator + "data" + File.separator + "settings.data");
-	
 	private static File helpFile = new File(Main.getInstance().getDataFolder() + File.separator + "guis" + File.separator + "help.yml");
 	private static FileConfiguration helpYML;
 	private static GuiManager helpMenu = null;
 	private static FortuneUtil fortuneUtil = null;
+	private static PrestigeSettings prestigeSettings = null;
 	
 	public static void loadFiles()
 	{
@@ -54,6 +74,15 @@ public class StorageManager {
 			for (int i = 1; i <=3;i++)
 			System.out.println(MainUtils.chatColor("&c&lERROR &7&lCould not load Fortune Blocks"));
 		}
+		
+		Long prestigeCost;
+		List<String> prestigeRewards;
+		
+		try {
+			prestigeCost = Main.getInstance().getConfig().getLong("prestige.cost");
+			prestigeRewards = Main.getInstance().getConfig().getStringList("prestige.rewards");
+			prestigeSettings = new PrestigeSettings(prestigeCost,prestigeRewards);
+		} catch (Exception exc) {System.out.println("CrusadeMain >> Could not load prestiges!");}
 		
 		if (!(helpFile.exists()))
 		{
@@ -74,6 +103,126 @@ public class StorageManager {
 		try {
 			helpYML = YamlConfiguration.loadConfiguration(helpFile);
 			loadHelpGui();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return;
+		}
+		
+		if (!(kitsFile.exists()))
+		{
+			if(!(kitsFile.getParentFile().exists()))
+			{
+				kitsFile.getParentFile().mkdirs();
+			}
+			
+			try {
+				kitsFile.createNewFile();
+				copy(Main.getInstance().getResource("guis/kits.yml"),kitsFile);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return;
+			}
+		}
+		
+		try {
+			kitsYML = YamlConfiguration.loadConfiguration(kitsFile);
+			loadKitsGui();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return;
+		}
+		
+		if (!(warpsFile.exists()))
+		{
+			if(!(warpsFile.getParentFile().exists()))
+			{
+				warpsFile.getParentFile().mkdirs();
+			}
+			
+			try {
+				warpsFile.createNewFile();
+				copy(Main.getInstance().getResource("guis/warps.yml"),warpsFile);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return;
+			}
+		} 
+		
+		try {
+			warpsYML = YamlConfiguration.loadConfiguration(warpsFile);
+			loadWarpsGUI();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return;
+		}
+		
+		if (!(prestigeWarpsFile.exists()))
+		{
+			if(!(prestigeWarpsFile.getParentFile().exists()))
+			{
+				prestigeWarpsFile.getParentFile().mkdirs();
+			}
+			
+			try {
+				prestigeWarpsFile.createNewFile();
+				copy(Main.getInstance().getResource("guis/prestigeWarps.yml"),prestigeWarpsFile);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return;
+			}
+		} 
+		
+		try {
+			prestigeWarpsYML = YamlConfiguration.loadConfiguration(prestigeWarpsFile);
+			loadPrestigeWarps();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return;
+		}
+		
+		if (!(donorWarpsFile.exists()))
+		{
+			if(!(donorWarpsFile.getParentFile().exists()))
+			{
+				donorWarpsFile.getParentFile().mkdirs();
+			}
+			
+			try {
+				donorWarpsFile.createNewFile();
+				copy(Main.getInstance().getResource("guis/donorWarps.yml"),donorWarpsFile);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return;
+			}
+		} 
+		
+		try {
+			donorWarpsYML = YamlConfiguration.loadConfiguration(donorWarpsFile);
+			loadDonorWarps();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return;
+		}
+		
+		if (!(publicWarpsFile.exists()))
+		{
+			if(!(publicWarpsFile.getParentFile().exists()))
+			{
+				publicWarpsFile.getParentFile().mkdirs();
+			}
+			
+			try {
+				publicWarpsFile.createNewFile();
+				copy(Main.getInstance().getResource("guis/publicWarps.yml"),publicWarpsFile);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return;
+			}
+		} 
+		
+		try {
+			publicWarpsYML = YamlConfiguration.loadConfiguration(publicWarpsFile);
+			loadPublicWarps();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return;
@@ -143,23 +292,8 @@ public class StorageManager {
 		}
 		
 		try {
-			if (!(settingsData.exists()))
-			{
-				if (!(settingsData.getParentFile().exists()))
-				{
-					settingsData.getParentFile().mkdirs();
-				}
-				settingsData.mkdirs();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return;
-		}
-		
-		try {
 			settingsYML = YamlConfiguration.loadConfiguration(settingsFile);
 			loadSettingsGui();
-			PlayerSettings.loadSettings();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return;
@@ -214,7 +348,7 @@ public class StorageManager {
 				}
 				
 				ItemStack temp;
-				if (item.startsWith("customhead:"))
+				if (item != null && item.startsWith("customhead:"))
 				{
 					try {
 						temp = MainUtils.fromBase64(item.substring(item.indexOf("customhead:")));
@@ -262,6 +396,552 @@ public class StorageManager {
 		helpMenu = new GuiManager(helpGui.getString("name"),helpGui.getInt("slot"),activeItems);
 	}
 	
+	public static void loadKitsGui()
+	{
+		ConfigurationSection kitsGui = kitsYML.getConfigurationSection("kits");
+		if (kitsGui == null)
+		{
+			try {
+				copy(Main.getInstance().getResource("guis/kits.yml"), kitsFile);
+				kitsYML.save(kitsFile);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return;
+			}
+		}
+		
+		String name = ChatColor.translateAlternateColorCodes('&', kitsGui.getString("name"));
+		int slots = kitsGui.getInt("slots");
+		if (slots < 9 || slots > 54)
+		{
+			System.out.println(MainUtils.chatColor("&c&LERROR: &7Invalid number of slots. Set to 54"));
+			slots = 54;
+		}
+		
+		ConfigurationSection items = kitsGui.getConfigurationSection("items");
+		
+		List<GuiItem> activeItems = new ArrayList<>();
+		for (String itemSlots : items.getKeys(false))
+		{
+			ItemStack hasPerm = null;
+			ItemStack noPerm = null;
+			String permission = items.getConfigurationSection(itemSlots).getString("permission");
+			List<String> messages = MainUtils.listColor(items.getConfigurationSection(itemSlots).getStringList("messages"));
+			List<String> leftClick = items.getConfigurationSection(itemSlots).getStringList("leftClick");
+			List<String> rightClick = items.getConfigurationSection(itemSlots).getStringList("rightClick");
+			
+			if (items.getConfigurationSection(itemSlots + ".hasPerm") != null)
+			{
+				int id,data;
+				String itemName;
+				List<String> lore;
+				boolean glow;
+				
+				try {
+					id = items.getConfigurationSection(itemSlots + ".hasPerm").getInt("id");
+					data = items.getConfigurationSection(itemSlots + ".hasPerm").getInt("data");
+					itemName = MainUtils.chatColor(items.getConfigurationSection(itemSlots + ".hasPerm").getString("name"));
+					lore = MainUtils.listColor(items.getConfigurationSection(itemSlots + ".hasPerm").getStringList("lore"));
+					glow = items.getConfigurationSection(itemSlots + ".hasPerm").getBoolean("glow");
+				} catch (Exception exc) {
+					System.out.println("&c&lERROR&7 KitsGui Item:" + itemSlots);
+					exc.printStackTrace();
+					continue;
+				}
+				
+				hasPerm = new ItemStack(Material.getMaterial(id), 1, (short)data);
+				ItemMeta permMeta = hasPerm.getItemMeta();
+				permMeta.setDisplayName(itemName);
+				permMeta.setLore(lore);
+				if (glow)
+				{
+					permMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+					hasPerm.setItemMeta(permMeta);
+					hasPerm.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+				}
+				
+				hasPerm.setItemMeta(permMeta);
+			}
+			
+			if (items.getConfigurationSection(itemSlots + ".noPerm") != null)
+			{
+				int id,data;
+				String itemName;
+				List<String> lore;
+				boolean glow;
+				
+				try {
+					id = items.getConfigurationSection(itemSlots + ".noPerm").getInt("id");
+					data = items.getConfigurationSection(itemSlots + ".noPerm").getInt("data");
+					itemName = MainUtils.chatColor(items.getConfigurationSection(itemSlots + ".noPerm").getString("name"));
+					lore = MainUtils.listColor(items.getConfigurationSection(itemSlots + ".noPerm").getStringList("lore"));
+					glow = items.getConfigurationSection(itemSlots + ".noPerm").getBoolean("glow");
+				} catch (Exception exc) {
+					System.out.println("&c&lERROR&7 KitsGui Item:" + itemSlots);
+					exc.printStackTrace();
+					continue;
+				}
+				
+				noPerm = new ItemStack(Material.getMaterial(id), 1, (short)data);
+				ItemMeta permMeta = noPerm.getItemMeta();
+				permMeta.setDisplayName(itemName);
+				permMeta.setLore(lore);
+				if (glow)
+				{
+					permMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+					noPerm.setItemMeta(permMeta);
+					noPerm.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+				}
+				
+				noPerm.setItemMeta(permMeta);
+			}
+			
+			if (hasPerm != null && noPerm != null)
+			{
+				activeItems.add(new GuiItem(new ItemCreator(true,noPerm,hasPerm,permission),Integer.valueOf(itemSlots),leftClick,messages,rightClick));
+			} else {
+				System.out.println(MainUtils.chatColor("&c&LERROR &7Item in Kits not loaded correctly (" + itemSlots + ")"));
+			}
+		}
+		kits = new GuiManager(name,slots,activeItems);
+	}
+	
+	public static void loadWarpsGUI()
+	{
+		ConfigurationSection warpsGUI = warpsYML.getConfigurationSection("warps");
+		if (warpsGUI == null)
+		{
+			try {
+				copy(Main.getInstance().getResource("guis/warps.yml"), warpsFile);
+				warpsYML.save(warpsFile);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return;
+			}
+		}
+		
+		String name = MainUtils.chatColor(warpsGUI.getString("name"));
+		int slots = warpsGUI.getInt("slots");
+		if (slots < 9 || slots > 54)
+		{
+			System.out.println(MainUtils.chatColor("&c&LERROR: &7Invalid number of slots. Set to 54"));
+			slots = 54;
+		}
+		
+		ConfigurationSection items = warpsGUI.getConfigurationSection("items");
+		
+		List<GuiItem> activeItems = new ArrayList<>();
+		for (String itemSlots : items.getKeys(false))
+		{
+			ItemStack hasPerm = null;
+			ItemStack noPerm = null;
+			String permission = items.getConfigurationSection(itemSlots).getString("permission");
+			List<String> messages = MainUtils.listColor(items.getConfigurationSection(itemSlots).getStringList("messages"));
+			List<String> commands = items.getConfigurationSection(itemSlots).getStringList("commands");
+			
+			if (items.getConfigurationSection(itemSlots + ".hasPerm") != null)
+			{
+				int id,data;
+				String itemName;
+				List<String> lore;
+				boolean glow;
+				
+				try {
+					id = items.getConfigurationSection(itemSlots + ".hasPerm").getInt("id");
+					data = items.getConfigurationSection(itemSlots + ".hasPerm").getInt("data");
+					itemName = MainUtils.chatColor(items.getConfigurationSection(itemSlots + ".hasPerm").getString("name"));
+					lore = MainUtils.listColor(items.getConfigurationSection(itemSlots + ".hasPerm").getStringList("lore"));
+					glow = items.getConfigurationSection(itemSlots + ".hasPerm").getBoolean("glow");
+				} catch (Exception exc) {
+					System.out.println("&c&lERROR&7 WarpsGui Item:" + itemSlots);
+					exc.printStackTrace();
+					continue;
+				}
+				
+				hasPerm = new ItemStack(Material.getMaterial(id), 1, (short)data);
+				ItemMeta permMeta = hasPerm.getItemMeta();
+				permMeta.setDisplayName(itemName);
+				permMeta.setLore(lore);
+				if (glow)
+				{
+					permMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+					hasPerm.setItemMeta(permMeta);
+					hasPerm.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+				}
+				
+				hasPerm.setItemMeta(permMeta);
+			}
+			
+			if (items.getConfigurationSection(itemSlots + ".noPerm") != null)
+			{
+				int id,data;
+				String itemName;
+				List<String> lore;
+				boolean glow;
+				
+				try {
+					id = items.getConfigurationSection(itemSlots + ".noPerm").getInt("id");
+					data = items.getConfigurationSection(itemSlots + ".noPerm").getInt("data");
+					itemName = MainUtils.chatColor(items.getConfigurationSection(itemSlots + ".noPerm").getString("name"));
+					lore = MainUtils.listColor(items.getConfigurationSection(itemSlots + ".noPerm").getStringList("lore"));
+					glow = items.getConfigurationSection(itemSlots + ".noPerm").getBoolean("glow");
+				} catch (Exception exc) {
+					System.out.println("&c&lERROR&7 WarpsGui Item:" + itemSlots);
+					exc.printStackTrace();
+					continue;
+				}
+				
+				noPerm = new ItemStack(Material.getMaterial(id), 1, (short)data);
+				ItemMeta permMeta = noPerm.getItemMeta();
+				permMeta.setDisplayName(itemName);
+				permMeta.setLore(lore);
+				if (glow)
+				{
+					permMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+					noPerm.setItemMeta(permMeta);
+					noPerm.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+				}
+				
+				noPerm.setItemMeta(permMeta);
+			}
+			
+			if (hasPerm != null && noPerm != null)
+			{
+				activeItems.add(new GuiItem(new ItemCreator(true,noPerm,hasPerm,permission),Integer.valueOf(itemSlots),commands,messages));
+			} else {
+				System.out.println(MainUtils.chatColor("&c&LERROR &7Item in Warps not loaded correctly (" + itemSlots + ")"));
+			}
+		}
+		warps = new GuiManager(name,slots,activeItems);
+	}
+
+	public static void loadDonorWarps()
+	{
+		ConfigurationSection warpsGUI = donorWarpsYML.getConfigurationSection("warps");
+		if (warpsGUI == null)
+		{
+			try {
+				copy(Main.getInstance().getResource("guis/donorWarps.yml"), donorWarpsFile);
+				donorWarpsYML.save(donorWarpsFile);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return;
+			}
+		}
+		
+		String name = MainUtils.chatColor(warpsGUI.getString("name"));
+		int slots = warpsGUI.getInt("slots");
+		if (slots < 9 || slots > 54)
+		{
+			System.out.println(MainUtils.chatColor("&c&LERROR: &7Invalid number of slots. Set to 54"));
+			slots = 54;
+		}
+		
+		ConfigurationSection items = warpsGUI.getConfigurationSection("items");
+		
+		List<GuiItem> activeItems = new ArrayList<>();
+		for (String itemSlots : items.getKeys(false))
+		{
+			ItemStack hasPerm = null;
+			ItemStack noPerm = null;
+			String permission = items.getConfigurationSection(itemSlots).getString("permission");
+			List<String> messages = MainUtils.listColor(items.getConfigurationSection(itemSlots).getStringList("messages"));
+			List<String> commands = items.getConfigurationSection(itemSlots).getStringList("commands");
+			
+			if (items.getConfigurationSection(itemSlots + ".hasPerm") != null)
+			{
+				int id,data;
+				String itemName;
+				List<String> lore;
+				boolean glow;
+				
+				try {
+					id = items.getConfigurationSection(itemSlots + ".hasPerm").getInt("id");
+					data = items.getConfigurationSection(itemSlots + ".hasPerm").getInt("data");
+					itemName = MainUtils.chatColor(items.getConfigurationSection(itemSlots + ".hasPerm").getString("name"));
+					lore = MainUtils.listColor(items.getConfigurationSection(itemSlots + ".hasPerm").getStringList("lore"));
+					glow = items.getConfigurationSection(itemSlots + ".hasPerm").getBoolean("glow");
+				} catch (Exception exc) {
+					System.out.println("&c&lERROR&7 DonorWarpsGui Item:" + itemSlots);
+					exc.printStackTrace();
+					continue;
+				}
+				
+				hasPerm = new ItemStack(Material.getMaterial(id), 1, (short)data);
+				ItemMeta permMeta = hasPerm.getItemMeta();
+				permMeta.setDisplayName(itemName);
+				permMeta.setLore(lore);
+				if (glow)
+				{
+					permMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+					hasPerm.setItemMeta(permMeta);
+					hasPerm.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+				}
+				
+				hasPerm.setItemMeta(permMeta);
+			}
+			
+			if (items.getConfigurationSection(itemSlots + ".noPerm") != null)
+			{
+				int id,data;
+				String itemName;
+				List<String> lore;
+				boolean glow;
+				
+				try {
+					id = items.getConfigurationSection(itemSlots + ".noPerm").getInt("id");
+					data = items.getConfigurationSection(itemSlots + ".noPerm").getInt("data");
+					itemName = MainUtils.chatColor(items.getConfigurationSection(itemSlots + ".noPerm").getString("name"));
+					lore = MainUtils.listColor(items.getConfigurationSection(itemSlots + ".noPerm").getStringList("lore"));
+					glow = items.getConfigurationSection(itemSlots + ".noPerm").getBoolean("glow");
+				} catch (Exception exc) {
+					System.out.println("&c&lERROR&7 WarpsGui Item:" + itemSlots);
+					exc.printStackTrace();
+					continue;
+				}
+				
+				noPerm = new ItemStack(Material.getMaterial(id), 1, (short)data);
+				ItemMeta permMeta = noPerm.getItemMeta();
+				permMeta.setDisplayName(itemName);
+				permMeta.setLore(lore);
+				if (glow)
+				{
+					permMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+					noPerm.setItemMeta(permMeta);
+					noPerm.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+				}
+				
+				noPerm.setItemMeta(permMeta);
+			}
+			
+			if (hasPerm != null && noPerm != null)
+			{
+				activeItems.add(new GuiItem(new ItemCreator(true,noPerm,hasPerm,permission),Integer.valueOf(itemSlots),commands,messages));
+			} else {
+				System.out.println(MainUtils.chatColor("&c&LERROR &7Item in Warps not loaded correctly (" + itemSlots + ")"));
+			}
+		}
+		donorWarps = new GuiManager(name,slots,activeItems);
+	}
+	
+	public static void loadPrestigeWarps()
+	{
+		ConfigurationSection warpsGUI = prestigeWarpsYML.getConfigurationSection("warps");
+		if (warpsGUI == null)
+		{
+			try {
+				copy(Main.getInstance().getResource("guis/prestigeWarps.yml"), prestigeWarpsFile);
+				prestigeWarpsYML.save(prestigeWarpsFile);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return;
+			}
+		}
+		
+		String name = MainUtils.chatColor(warpsGUI.getString("name"));
+		int slots = warpsGUI.getInt("slots");
+		if (slots < 9 || slots > 54)
+		{
+			System.out.println(MainUtils.chatColor("&c&LERROR: &7Invalid number of slots. Set to 54"));
+			slots = 54;
+		}
+		
+		ConfigurationSection items = warpsGUI.getConfigurationSection("items");
+		
+		List<GuiItem> activeItems = new ArrayList<>();
+		for (String itemSlots : items.getKeys(false))
+		{
+			ItemStack hasPerm = null;
+			ItemStack noPerm = null;
+			String permission = items.getConfigurationSection(itemSlots).getString("permission");
+			List<String> messages = MainUtils.listColor(items.getConfigurationSection(itemSlots).getStringList("messages"));
+			List<String> commands = items.getConfigurationSection(itemSlots).getStringList("commands");
+			
+			if (items.getConfigurationSection(itemSlots + ".hasPerm") != null)
+			{
+				int id,data;
+				String itemName;
+				List<String> lore;
+				boolean glow;
+				
+				try {
+					id = items.getConfigurationSection(itemSlots + ".hasPerm").getInt("id");
+					data = items.getConfigurationSection(itemSlots + ".hasPerm").getInt("data");
+					itemName = MainUtils.chatColor(items.getConfigurationSection(itemSlots + ".hasPerm").getString("name"));
+					lore = MainUtils.listColor(items.getConfigurationSection(itemSlots + ".hasPerm").getStringList("lore"));
+					glow = items.getConfigurationSection(itemSlots + ".hasPerm").getBoolean("glow");
+				} catch (Exception exc) {
+					System.out.println("&c&lERROR&7 WarpsGui Item:" + itemSlots);
+					exc.printStackTrace();
+					continue;
+				}
+				
+				hasPerm = new ItemStack(Material.getMaterial(id), 1, (short)data);
+				ItemMeta permMeta = hasPerm.getItemMeta();
+				permMeta.setDisplayName(itemName);
+				permMeta.setLore(lore);
+				if (glow)
+				{
+					permMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+					hasPerm.setItemMeta(permMeta);
+					hasPerm.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+				}
+				
+				hasPerm.setItemMeta(permMeta);
+			}
+			
+			if (items.getConfigurationSection(itemSlots + ".noPerm") != null)
+			{
+				int id,data;
+				String itemName;
+				List<String> lore;
+				boolean glow;
+				
+				try {
+					id = items.getConfigurationSection(itemSlots + ".noPerm").getInt("id");
+					data = items.getConfigurationSection(itemSlots + ".noPerm").getInt("data");
+					itemName = MainUtils.chatColor(items.getConfigurationSection(itemSlots + ".noPerm").getString("name"));
+					lore = MainUtils.listColor(items.getConfigurationSection(itemSlots + ".noPerm").getStringList("lore"));
+					glow = items.getConfigurationSection(itemSlots + ".noPerm").getBoolean("glow");
+				} catch (Exception exc) {
+					System.out.println("&c&lERROR&7 PrestigeWarpsGui Item:" + itemSlots);
+					exc.printStackTrace();
+					continue;
+				}
+				
+				noPerm = new ItemStack(Material.getMaterial(id), 1, (short)data);
+				ItemMeta permMeta = noPerm.getItemMeta();
+				permMeta.setDisplayName(itemName);
+				permMeta.setLore(lore);
+				if (glow)
+				{
+					permMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+					noPerm.setItemMeta(permMeta);
+					noPerm.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+				}
+				
+				noPerm.setItemMeta(permMeta);
+			}
+			
+			if (hasPerm != null && noPerm != null)
+			{
+				activeItems.add(new GuiItem(new ItemCreator(true,noPerm,hasPerm,permission),Integer.valueOf(itemSlots),commands,messages));
+			} else {
+				System.out.println(MainUtils.chatColor("&c&LERROR &7Item in Warps not loaded correctly (" + itemSlots + ")"));
+			}
+		}
+		prestigeWarps = new GuiManager(name,slots,activeItems);
+	}
+	
+	public static void loadPublicWarps()
+	{
+		ConfigurationSection warpsGUI = publicWarpsYML.getConfigurationSection("warps");
+		if (warpsGUI == null)
+		{
+			try {
+				copy(Main.getInstance().getResource("guis/publicWarps.yml"), publicWarpsFile);
+				publicWarpsYML.save(publicWarpsFile);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return;
+			}
+		}
+		
+		String name = MainUtils.chatColor(warpsGUI.getString("name"));
+		int slots = warpsGUI.getInt("slots");
+		if (slots < 9 || slots > 54)
+		{
+			System.out.println(MainUtils.chatColor("&c&LERROR: &7Invalid number of slots. Set to 54"));
+			slots = 54;
+		}
+		
+		ConfigurationSection items = warpsGUI.getConfigurationSection("items");
+		
+		List<GuiItem> activeItems = new ArrayList<>();
+		for (String itemSlots : items.getKeys(false))
+		{
+			ItemStack hasPerm = null;
+			ItemStack noPerm = null;
+			String permission = items.getConfigurationSection(itemSlots).getString("permission");
+			List<String> messages = MainUtils.listColor(items.getConfigurationSection(itemSlots).getStringList("messages"));
+			List<String> commands = items.getConfigurationSection(itemSlots).getStringList("commands");
+			
+			if (items.getConfigurationSection(itemSlots + ".hasPerm") != null)
+			{
+				int id,data;
+				String itemName;
+				List<String> lore;
+				boolean glow;
+				
+				try {
+					id = items.getConfigurationSection(itemSlots + ".hasPerm").getInt("id");
+					data = items.getConfigurationSection(itemSlots + ".hasPerm").getInt("data");
+					itemName = MainUtils.chatColor(items.getConfigurationSection(itemSlots + ".hasPerm").getString("name"));
+					lore = MainUtils.listColor(items.getConfigurationSection(itemSlots + ".hasPerm").getStringList("lore"));
+					glow = items.getConfigurationSection(itemSlots + ".hasPerm").getBoolean("glow");
+				} catch (Exception exc) {
+					System.out.println("&c&lERROR&7 WarpsGui Item:" + itemSlots);
+					exc.printStackTrace();
+					continue;
+				}
+				
+				hasPerm = new ItemStack(Material.getMaterial(id), 1, (short)data);
+				ItemMeta permMeta = hasPerm.getItemMeta();
+				permMeta.setDisplayName(itemName);
+				permMeta.setLore(lore);
+				if (glow)
+				{
+					permMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+					hasPerm.setItemMeta(permMeta);
+					hasPerm.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+				}
+				
+				hasPerm.setItemMeta(permMeta);
+			}
+			
+			if (items.getConfigurationSection(itemSlots + ".noPerm") != null)
+			{
+				int id,data;
+				String itemName;
+				List<String> lore;
+				boolean glow;
+				
+				try {
+					id = items.getConfigurationSection(itemSlots + ".noPerm").getInt("id");
+					data = items.getConfigurationSection(itemSlots + ".noPerm").getInt("data");
+					itemName = MainUtils.chatColor(items.getConfigurationSection(itemSlots + ".noPerm").getString("name"));
+					lore = MainUtils.listColor(items.getConfigurationSection(itemSlots + ".noPerm").getStringList("lore"));
+					glow = items.getConfigurationSection(itemSlots + ".noPerm").getBoolean("glow");
+				} catch (Exception exc) {
+					System.out.println("&c&lERROR&7 PublicWarpsGui Item:" + itemSlots);
+					exc.printStackTrace();
+					continue;
+				}
+				
+				noPerm = new ItemStack(Material.getMaterial(id), 1, (short)data);
+				ItemMeta permMeta = noPerm.getItemMeta();
+				permMeta.setDisplayName(itemName);
+				permMeta.setLore(lore);
+				if (glow)
+				{
+					permMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+					noPerm.setItemMeta(permMeta);
+					noPerm.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+				}
+				
+				noPerm.setItemMeta(permMeta);
+			}
+			
+			if (hasPerm != null && noPerm != null)
+			{
+				activeItems.add(new GuiItem(new ItemCreator(true,noPerm,hasPerm,permission),Integer.valueOf(itemSlots),commands,messages));
+			} else {
+				System.out.println(MainUtils.chatColor("&c&LERROR &7Item in Warps not loaded correctly (" + itemSlots + ")"));
+			}
+		}
+		publicWarps = new GuiManager(name,slots,activeItems);
+	}
+	
 	public static void loadSettingsGui()
 	{
 		ConfigurationSection settingsGui = settingsYML.getConfigurationSection("gui");
@@ -293,6 +973,7 @@ public class StorageManager {
 		{
 			ItemStack enabled = null;
 			ItemStack disabled = null;
+			ItemStack noPerm = null;
 			
 			if (settingsItems.getConfigurationSection(keys + ".enabled") != null)
 			{
@@ -336,6 +1017,8 @@ public class StorageManager {
 				{
 					tempMeta.setLore(MainUtils.listColor(lore));
 				}
+				tempMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+				tempMeta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
 				temp.setItemMeta(tempMeta);
 				if (settingsItems.getBoolean(keys + ".enabled.glow"))
 				{
@@ -390,6 +1073,9 @@ public class StorageManager {
 				{
 					tempMeta.setLore(MainUtils.listColor(lore));
 				}
+				tempMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+				tempMeta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+				
 				temp.setItemMeta(tempMeta);
 				if (settingsItems.getBoolean(keys + ".disabled.glow"))
 				{
@@ -401,14 +1087,70 @@ public class StorageManager {
 				disabled = temp.clone();
 			}
 			
+			if (settingsItems.getConfigurationSection(keys + ".noPerm") != null)
+			{
+				String item;
+				short data;
+				String name;
+				List<String> lore;
+				
+				try {
+					item = settingsItems.getString(keys + ".noPerm.item");
+					data = (short) settingsItems.getInt(keys + ".noPerm.data");
+					name = settingsItems.getString(keys + ".noPerm.name");
+					lore = settingsItems.getStringList(keys + ".noPerm.lore");
+				} catch (Exception e) {
+					Bukkit.getServer().getLogger().severe("Invalid item in Settings Gui (" + keys + ", NOPERM)");
+					continue;
+				}
+				
+				ItemStack temp;
+				if (item.startsWith("customhead:"))
+				{
+					try {
+						temp = MainUtils.fromBase64(item.substring(item.indexOf("customhead:")));
+					} catch (Exception e) {
+						Bukkit.getServer().getLogger().severe("Invalid item in Settings Gui (" + keys + ", NOPERM)");
+						continue;
+					}
+				} else {
+					int typeID;
+					try {
+						typeID = Integer.valueOf(item);
+						temp = new ItemStack(typeID,1,data);
+					} catch (Exception e) {
+						Bukkit.getServer().getLogger().severe("Invalid item in Settings Gui (" + keys + ", NOPERM)");
+						continue;
+					}
+				}
+				ItemMeta tempMeta = temp.getItemMeta();
+				tempMeta.setDisplayName(MainUtils.chatColor(name));
+				if (settingsItems.getBoolean(keys + ".noPerm.hasLore"))
+				{
+					tempMeta.setLore(MainUtils.listColor(lore));
+				}
+				tempMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+				tempMeta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+				
+				temp.setItemMeta(tempMeta);
+				if (settingsItems.getBoolean(keys + ".noPerm.glow"))
+				{
+					tempMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+					temp.setItemMeta(tempMeta);
+					temp.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+				}
+				
+				noPerm = temp.clone();
+			}
+			
 			List<String> enabledList = new ArrayList<>();
 			List<String> disabledList = new ArrayList<>();
-			String type = settingsGui.getString(keys + ".type");
-			if (enabled != null && disabled != null)
+			String type = settingsItems.getString(keys + ".type");
+			if (enabled != null && disabled != null && noPerm != null)
 			{
-				activeItems.add(new GuiItem(new ItemCreator(true,disabled,enabled,""),Integer.valueOf(keys)-1,enabledList,disabledList,type));
-			} else if (enabled != null) {
-				activeItems.add(new GuiItem(new ItemCreator(true,null,enabled,""),Integer.valueOf(keys)-1,enabledList,disabledList,type));
+				activeItems.add(new GuiItem(new ItemCreator(true,true, noPerm, disabled,enabled,Long.valueOf(0),settingsItems.getString(keys + ".perm")),Integer.valueOf(keys),enabledList,disabledList,type));
+			} else if (enabled != null && disabled != null) {
+				activeItems.add(new GuiItem(new ItemCreator(true,disabled,enabled,null),Integer.valueOf(keys),enabledList,disabledList,type));
 			} else {
 				continue;
 			}
@@ -674,16 +1416,18 @@ public class StorageManager {
 			if (access != null && locked != null && canRankup != null)
 			{
 				List<String> actions = ranksItems.getStringList(keys + ".actions");
+				List<String> secondActions = ranksItems.getStringList(keys + ".rankedUp");
 				List<String> noPerm = ranksItems.getStringList(keys + ".noPerm");
 				String permission = ranksItems.getString(keys + ".permission");
 				activeItems.add(new GuiItem(new ItemCreator(true,true,locked,canRankup,access,cost,permission),
-						Integer.valueOf(keys),actions,noPerm));
+						Integer.valueOf(keys),actions,noPerm,secondActions));
 			} else if (access != null && locked != null) {
 				List<String> actions = ranksItems.getStringList(keys + ".actions");
+				List<String> secondActions = ranksItems.getStringList(keys + ".rankedUp");
 				List<String> noPerm = ranksItems.getStringList(keys + ".noPerm");
 				String permission = ranksItems.getString(keys + ".permission");
 				activeItems.add(new GuiItem(new ItemCreator(true,locked,access,permission),
-						Integer.valueOf(keys),actions,noPerm));
+						Integer.valueOf(keys),actions,noPerm,secondActions));
 			} else {
 				continue;
 			}
@@ -691,7 +1435,7 @@ public class StorageManager {
 		
 		String name = ranksGui.getString("name");
 		int slots = ranksGui.getInt("slots");
-		rankups = new GuiManager(name,slots,activeItems);
+		rankups = new GuiManager(MainUtils.chatColor(name),slots,activeItems);
 	}
 	
 	private static void copy(InputStream in, File file)
@@ -730,14 +1474,36 @@ public class StorageManager {
 		return settings;
 	}
 	
+	public static GuiManager getWarps()
+	{
+		return warps;
+	}
+	
+	public static PrestigeSettings getPrestigeSettings()
+	{
+		return prestigeSettings;
+	}
+	
+	public static GuiManager getKits()
+	{
+		return kits;
+	}
+	public static GuiManager getDonorWarps()
+	{
+		return donorWarps;
+	}
+	public static GuiManager getPrestigeWarps()
+	{
+		return prestigeWarps;
+	}
+	public static GuiManager getPublicWarps()
+	{
+		return publicWarps;
+	}
+	
 	public static FortuneUtil getFortune()
 	{
 		return fortuneUtil;
-	}
-	
-	public static File getSettingsData()
-	{
-		return settingsData;
 	}
 	
 }

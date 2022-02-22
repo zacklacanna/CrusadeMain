@@ -4,6 +4,8 @@ import java.util.HashMap;
 
 import org.bukkit.entity.Player;
 
+import com.vk2gpz.tokenenchant.api.TokenEnchantAPI;
+
 import me.boyjamal.main.Main;
 
 public class TokenManager {
@@ -12,7 +14,13 @@ public class TokenManager {
 	
 	public static void addToken(Player p, int amount)
 	{
-		Main.getInstance().getTokens().addTokens(p, amount);
+		if (tokenSummery.containsKey(p.getUniqueId().toString()))
+		{
+			TokenEnchantAPI.getInstance().addTokens(p, amount);
+			tokenSummery.get(p.getUniqueId().toString()).addBlocks(1);
+		} else {
+			TokenEnchantAPI.getInstance().addTokens(p, amount);
+		}
 	}
 	
 	public static void removeToken(Player p, int amount)

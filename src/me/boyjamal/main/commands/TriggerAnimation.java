@@ -29,7 +29,7 @@ public class TriggerAnimation implements CommandExecutor {
 				return true;
 			}
 			
-			LevelUp.createAnimation(reciever,args[1]);
+			LevelUp.createAnimation(reciever,args[1],"Rankup");
 		} else {
 			sender.sendMessage(MainUtils.chatColor("&c&LERROR &7&o/triggeranimation <player> <level>"));
 			return true;

@@ -1,3 +1,10 @@
+prestige:
+  cost: 10000000000
+  rewards:
+  - 'console:lp user %player% group remove Z'
+  - 'console:lp user %player% group add A'
+  - 'console:crate give %player% Prosperous 1'
+  
 fortune:
   multi: 1.25
   allowed_worlds:

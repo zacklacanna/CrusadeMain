@@ -5,6 +5,9 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import me.boyjamal.main.utils.MainUtils;
+import me.kvq.supertrailspro.API.SuperTrailsAPI;
+import me.kvq.supertrailspro.wings.WingsManager;
 import me.kvq.supertrailspro.wings.WingsMenu;
 
 public class Wings implements CommandExecutor {
@@ -15,7 +18,22 @@ public class Wings implements CommandExecutor {
 		{
 			return true;
 		} else {
-			WingsMenu.WingsSelector((Player)sender);
+			if (args.length == 0 || args.length >= 2)
+			{
+				WingsMenu.WingsSelector((Player)sender);
+				return true;
+			} else {
+				if (args[0].equalsIgnoreCase("off"))
+				{
+					//turn wings off
+					if (SuperTrailsAPI.getPlayerData((Player)sender).getWings().length >= 1)
+					{
+						SuperTrailsAPI.getPlayerData((Player)sender).resetWings();
+					}
+				} else {
+					sender.sendMessage(MainUtils.chatColor("&c&lERROR &7Usage: /wings off"));
+				}
+			}
 			return true;
 		}
 	}
